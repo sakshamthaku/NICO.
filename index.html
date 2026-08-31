@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 
+      ==========================================================================
+      NICO STARTUP LAUNCHING WEBSITE — EDITING GUIDE & CONFIGURATION COMMENTS
+      ==========================================================================
+      You can easily customize this website by updating the text and links below:
+      
+      1. Company Description & Hero: Edit text under the "Hero Section" tag.
+      2. Vision & Cards: Modify items inside the "Vision Section".
+      3. Projects & Links: Update NoteZ, OSLine, or Timetable URLs in the "Projects Section".
+      4. Timeline / Record: Adjust milestones inside the "NICO Project Record" section.
+      5. Navigation & Links: Update footer/header links and the #join anchor or target pages.
+      ==========================================================================
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NICO — Victory of Employees</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVIGATION HEADER -->
+    <header class="site-header" id="header">
+        <div class="nav-container">
+            <a href="#" class="logo">NICO</a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#vision" class="nav-link">Vision</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#timeline" class="nav-link">Record</a>
+                <a href="#build" class="nav-link">Roadmap</a>
+                <a href="#join" class="nav-link nav-btn-highlight">Join Us</a>
+            </nav>
+            <div class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. HERO SECTION -->
+        <section class="hero-section">
+            <div class="container hero-content">
+                <div class="badge-container">
+                    <span class="status-badge">BUILDING IN PUBLIC</span>
+                </div>
+                <h1 class="hero-logo-text">NICO</h1>
+                <h2 class="hero-headline">"Technology built by people."</h2>
+                <p class="hero-description">
+                    We are building useful technology for everyday people, students, universities and organizations.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">EXPLORE NICO</a>
+                    <a href="#join" class="btn btn-secondary">JOIN NICO</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT NICO -->
+        <section class="section about-section" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2>WHAT IS NICO?</h2>
+                    <div class="underline"></div>
+                </div>
+                <div class="about-card">
+                    <p class="about-text">
+                        NICO is an early-stage technology company focused on creating useful software and digital tools. 
+                        We believe that technology should solve real problems without unnecessary complexity. 
+                        <strong>NICO is currently being built from the ground up, one meaningful project at a time.</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. VISION -->
+        <section class="section vision-section" id="vision">
+            <div class="container">
+                <div class="section-header">
+                    <h2>OUR VISION</h2>
+                    <div class="underline"></div>
+                    <p class="section-subtitle">"Make technology more useful, accessible and people-focused."</p>
+                </div>
+                <div class="grid-4">
+                    <div class="card">
+                        <div class="card-icon">⚡</div>
+                        <h3>Useful Technology</h3>
+                        <p>Focusing purely on utility, speed, and real-world application for everyday users.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🤝</div>
+                        <h3>People First</h3>
+                        <p>Designed around human needs rather than corporate metrics or intrusive tracking.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📈</div>
+                        <h3>Continuous Improvement</h3>
+                        <p>Iterating constantly based on real user feedback and open community input.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🛠️</div>
+                        <h3>Build Together</h3>
+                        <p>An open environment where anyone can contribute, suggest, and shape our direction.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FIRST PROJECT — NOTEZ -->
+        <section class="section project-section" id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <h2>OUR FIRST PROJECT</h2>
+                    <div class="underline"></div>
+                </div>
+                <div class="project-showcase">
+                    <div class="project-info">
+                        <span class="project-tag">Active Development</span>
+                        <h3 class="project-title">NoteZ</h3>
+                        <p class="project-desc">
+                            NoteZ is a productivity platform bringing useful tools together for students and everyday users. 
+                            Built to streamline daily workflows and organization.
+                        </p>
+                        <div class="tool-list">
+                            <span class="tool-pill">Notes</span>
+                            <span class="tool-pill">Planning</span>
+                            <span class="tool-pill">Timetable</span>
+                            <span class="tool-pill">PDF Generator</span>
+                            <span class="tool-pill">OSLine</span>
+                            <span class="tool-pill beta">AI Summary — Beta / Under Development</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://timene.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">VISIT NOTEZ</a>
+                            <a href="https://sakshamthaku.github.io/OSline/" target="_blank" rel="noopener noreferrer" class="btn btn-outline">EXPLORE OSLINE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. NICO PROJECT RECORD -->
+        <section class="section timeline-section" id="timeline">
+            <div class="container">
+                <div class="section-header">
+                    <h2>NICO PROJECT RECORD</h2>
+                    <div class="underline"></div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2026</div>
+                        <div class="timeline-content">
+                            <h4>NICO begins as an idea</h4>
+                            <p>The core concept of building human-centric software takes shape.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>NoteZ development starts</h4>
+                            <p>Laying down the foundation for a unified productivity suite.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>First productivity tools created</h4>
+                            <p>Core writing, note-taking, and utility features deployed.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>Planning and timetable added</h4>
+                            <p>Integrated scheduling features for students and professionals.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>External tools integrated</h4>
+                            <p>Partnering modular web experiences like OSLine into the ecosystem.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>AI Summary begins development</h4>
+                            <p>Experimenting with local intelligence for automated document summaries.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>NICO enters Beta-building stage</h4>
+                            <p>Opening up public collaboration and feedback loops.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. WHAT WE WANT TO BUILD -->
+        <section class="section roadmap-section" id="build">
+            <div class="container">
+                <div class="section-header">
+                    <h2>WHAT WE WANT TO BUILD</h2>
+                    <div class="underline"></div>
+                    <p class="section-subtitle">Future areas of expansion and exploratory development.</p>
+                </div>
+                <div class="grid-5">
+                    <div class="roadmap-card">
+                        <div class="roadmap-icon">💻</div>
+                        <h4>Software</h4>
+                    </div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-icon">🎓</div>
+                        <h4>Education Technology</h4>
+                    </div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-icon">🤖</div>
+                        <h4>AI Tools</h4>
+                    </div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-icon">📊</div>
+                        <h4>Productivity</h4>
+                    </div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-icon">🌱</div>
+                        <h4>Everyday Technology</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. JOIN NICO -->
+        <section class="section join-section" id="join">
+            <div class="container">
+                <div class="join-box">
+                    <h2>JOIN NICO</h2>
+                    <p class="join-subtitle">"Don't just use technology. Help us build it."</p>
+                    <p class="join-desc">
+                        NICO is looking for contributors who can help <strong>Build</strong>, <strong>Design</strong>, <strong>Test</strong>, <strong>Suggest</strong>, <strong>Create</strong>, and <strong>Grow</strong>.
+                    </p>
+                    <div class="hero-buttons center">
+                        <a href="mailto:contact@nico.tech" class="btn btn-primary">JOIN NICO</a>
+                        <a href="mailto:ideas@nico.tech" class="btn btn-secondary">SUGGEST AN IDEA</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. COMPANY PHILOSOPHY -->
+        <section class="section philosophy-section">
+            <div class="container text-center">
+                <h2 class="philosophy-title">"NICO — Victory of Employees"</h2>
+                <p class="philosophy-subtitle">Built by people. Powered by employees. Won together.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- 9. FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <h3>NICO</h3>
+                <p>"Technology built by people."</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <a href="#">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#join">Join NICO</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 NICO. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Script File -->
+    <script src="script.js"></script>
+</body>
+</html>
