@@ -1,66 +1,120 @@
-/* ==========================================
-   NICO STARTUP LAUNCHING SCRIPT
-   ========================================== */
+// Navigation scroll effect (Blur & border when scrolling)
+const header = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+});
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Mobile Navigation Toggle
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
+// Mobile menu toggle
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const mobileMenu = document.getElementById('mobile-menu');
 
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
+hamburgerBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    
+    // Animate hamburger lines into X cross or similar if desired
+    const spans = hamburgerBtn.querySelectorAll('span');
+    if (mobileMenu.classList.contains('active')) {
+        spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+    } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    }
+});
 
-        // Close menu when clicking any nav link
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        });
+// Close mobile menu when a link is clicked
+document.querySelectorAll('.mob-link, .mob-btn').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        const spans = hamburgerBtn.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    });
+});
+
+// Subtle background canvas animation (Particles/Grid dots)
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+
+let width, height;
+let particles = [];
+
+function resizeCanvas() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Initialize minimal background floating points
+const particleCount = Math.floor(window.innerWidth * window.innerHeight / 25000);
+
+class Particle {
+    constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.2;
+        this.vy = (Math.random() - 0.5) * 0.2;
+        this.radius = Math.random() * 1.2;
     }
 
-    // 2. Scroll Reveal Animation for Timeline Items
-    const timelineItems = document.querySelectorAll('.timeline-item');
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
 
-    const revealOnScroll = () => {
-        const triggerBottom = window.innerHeight * 0.85;
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+    }
 
-        timelineItems.forEach(item => {
-            const itemTop = item.getBoundingClientRect().top;
-            if (itemTop < triggerBottom) {
-                item.classList.add('visible');
-            }
-        });
-    };
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        ctx.fill();
+    }
+}
 
-    // Run on load and scroll
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll(); // Initial check
+for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+}
 
-    // 3. Header Active Link Highlighting on Scroll
-    const sections = document.querySelectorAll('section[id]');
+function animateParticles() {
+    ctx.clearRect(0, 0, width, height);
+    
+    // Draw subtle grid lines
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.012)';
+    ctx.lineWidth = 1;
+    const gridSize = 80;
+    
+    for (let x = 0; x < width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+    }
+    for (let y = 0; y < height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+    }
 
-    const highlightNavOnScroll = () => {
-        const scrollPosition = window.scrollY + 150;
+    // Update and draw particles
+    particles.forEach(p => {
+        p.update();
+        p.draw();
+    });
 
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            const correspondingLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
+    requestAnimationFrame(animateParticles);
+}
 
-            if (correspondingLink) {
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    correspondingLink.classList.add('active');
-                }
-            }
-        });
-    };
-
-    window.addEventListener('scroll', highlightNavOnScroll);
-});
+animateParticles();
