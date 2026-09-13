@@ -1021,3 +1021,374 @@ header.scrolled {
         border-radius: 6px;
     }
 }
+/* =========================================================
+   NOTEZ INTERACTIVE VIDEO VIEWER
+   ========================================================= */
+
+.project-video-wrapper {
+    width: 100%;
+    margin: 0 0 1.5rem 0;
+}
+
+
+/* Main video box */
+.project-video {
+    width: 100%;
+    position: relative;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 10px;
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.45),
+        0 0 20px rgba(0, 229, 255, 0.05);
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* Video viewing area */
+.video-viewport {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: #000;
+
+    cursor: grab;
+
+    touch-action: none;
+}
+
+
+/* When dragging */
+.video-viewport.dragging {
+    cursor: grabbing;
+}
+
+
+/* Zoomable video */
+.video-content {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 100%;
+    height: 100%;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+
+    transform-origin: center center;
+
+    transition: transform 0.25s ease;
+
+    will-change: transform;
+}
+
+
+/* Disable transition while dragging */
+.video-content.is-dragging {
+    transition: none;
+}
+
+
+/* YouTube iframe */
+.video-content iframe {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   VIDEO CONTROLS
+   ========================================================= */
+
+.video-controls {
+    position: absolute;
+
+    left: 50%;
+    bottom: 12px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 7px 9px;
+
+    background: rgba(5, 5, 5, 0.88);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 8px;
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.45);
+
+    z-index: 10;
+}
+
+
+/* Individual buttons */
+.video-control-btn {
+    min-width: 34px;
+    height: 32px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 9px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    color: var(--text-primary);
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    border-radius: 5px;
+
+    font-family: var(--font-main);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.video-control-btn:hover {
+    background: rgba(0, 229, 255, 0.10);
+
+    color: var(--accent-cyan);
+
+    border-color: rgba(0, 229, 255, 0.35);
+
+    transform: translateY(-1px);
+}
+
+
+.video-control-btn:active {
+    transform: scale(0.95);
+}
+
+
+/* Zoom percentage */
+.zoom-level {
+    min-width: 48px;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 0.75rem;
+
+    font-weight: 600;
+
+    user-select: none;
+}
+
+
+/* Reset button */
+.reset-btn {
+    font-size: 0.72rem;
+}
+
+
+/* Fullscreen button */
+.fullscreen-btn {
+    font-size: 1.05rem;
+}
+
+
+/* =========================================================
+   VIDEO HINT
+   ========================================================= */
+
+.video-hint {
+    position: absolute;
+
+    top: 12px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 5px 10px;
+
+    background: rgba(5, 5, 5, 0.72);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 5px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 0.68rem;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+
+    z-index: 10;
+
+    opacity: 0;
+
+    transition: opacity 0.3s ease;
+}
+
+
+/* Show hint when hovering */
+.project-video:hover .video-hint {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   HOVER EFFECT
+   ========================================================= */
+
+.project-video:hover {
+    border-color: rgba(0, 229, 255, 0.28);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.55),
+        0 0 28px rgba(0, 229, 255, 0.10);
+}
+
+
+/* =========================================================
+   FULLSCREEN MODE
+   ========================================================= */
+
+.project-video:fullscreen {
+    width: 100vw;
+    height: 100vh;
+
+    border: none;
+
+    border-radius: 0;
+
+    background: #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.project-video:fullscreen .video-viewport {
+    width: 100vw;
+    height: 100vh;
+
+    aspect-ratio: auto;
+}
+
+
+.project-video:fullscreen .video-content {
+    width: 100%;
+    height: 100%;
+}
+
+
+.project-video:-webkit-full-screen {
+    width: 100vw;
+    height: 100vh;
+
+    border: none;
+
+    border-radius: 0;
+
+    background: #000;
+}
+
+
+/* =========================================================
+   MOBILE VIDEO
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .project-video {
+        border-radius: 8px;
+    }
+
+    .video-controls {
+        bottom: 8px;
+
+        gap: 4px;
+
+        padding: 5px 6px;
+    }
+
+    .video-control-btn {
+        min-width: 30px;
+        height: 29px;
+
+        padding: 0 7px;
+
+        font-size: 0.8rem;
+    }
+
+    .zoom-level {
+        min-width: 42px;
+
+        font-size: 0.68rem;
+    }
+
+    .reset-btn {
+        font-size: 0.65rem;
+    }
+
+    .video-hint {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .video-controls {
+        left: auto;
+        right: 8px;
+
+        transform: none;
+    }
+
+    .video-control-btn {
+        min-width: 28px;
+        height: 28px;
+
+        padding: 0 6px;
+    }
+
+    .reset-btn {
+        display: none;
+    }
+}
