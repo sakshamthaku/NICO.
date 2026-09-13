@@ -414,6 +414,65 @@ header.scrolled {
     cursor: not-allowed;
 }
 
+
+/* =========================================================
+   NOTEZ PRODUCT VIDEO
+   ========================================================= */
+
+.project-video {
+    width: 100%;
+    position: relative;
+    margin: 0 0 1.5rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+
+    /* Clean NICO glass border */
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    /* Dark background behind iframe */
+    background: #000;
+
+    /* Subtle premium shadow */
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.45),
+        0 0 20px rgba(0, 229, 255, 0.05);
+
+    /* Smooth hover effect */
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+
+    /* Keeps video perfectly proportional */
+    aspect-ratio: 16 / 9;
+}
+
+/* Video frame */
+.project-video iframe {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: #000;
+}
+
+/* Premium hover effect */
+.project-video:hover {
+    border-color: rgba(0, 229, 255, 0.28);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.55),
+        0 0 28px rgba(0, 229, 255, 0.10);
+}
+
+
 /* ECOSYSTEM MAP */
 .ecosystem-section {
     background: linear-gradient(180deg, var(--bg-black) 0%, var(--bg-charcoal) 100%);
@@ -633,11 +692,15 @@ header.scrolled {
 }
 
 @keyframes spinClockwise {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes spinCounter {
-    to { transform: rotate(-360deg); }
+    to {
+        transform: rotate(-360deg);
+    }
 }
 
 /* VISION TIMELINE SECTION */
@@ -773,10 +836,25 @@ header.scrolled {
     border-radius: 4px;
 }
 
-.st-val.beta { background: rgba(0, 229, 255, 0.1); color: var(--accent-cyan); }
-.st-val.dev { background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); }
-.st-val.future { background: rgba(255, 165, 0, 0.1); color: #ffa500; }
-.st-val.long { background: rgba(147, 112, 219, 0.1); color: #9370db; }
+.st-val.beta {
+    background: rgba(0, 229, 255, 0.1);
+    color: var(--accent-cyan);
+}
+
+.st-val.dev {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+}
+
+.st-val.future {
+    background: rgba(255, 165, 0, 0.1);
+    color: #ffa500;
+}
+
+.st-val.long {
+    background: rgba(147, 112, 219, 0.1);
+    color: #9370db;
+}
 
 /* FOOTER */
 .footer {
@@ -854,18 +932,24 @@ header.scrolled {
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 900px) {
-    .nav-links, .nav-right .btn-primary-small {
+
+    .nav-links,
+    .nav-right .btn-primary-small {
         display: none;
     }
+
     .hamburger {
         display: flex;
     }
+
     .footer-links-group {
         gap: 2rem;
     }
+
     .ecosystem-map {
         height: 440px;
     }
+
     .node-5 {
         top: auto;
         bottom: 45%;
@@ -873,26 +957,67 @@ header.scrolled {
     }
 }
 
+
+/* =========================================================
+   VIDEO RESPONSIVE DESIGN
+   ========================================================= */
+
 @media (max-width: 600px) {
+
     .hero-btns {
         flex-direction: column;
     }
+
     .gaming-flow-box {
         flex-direction: column;
         align-items: flex-start;
     }
+
     .path-sep {
         transform: rotate(90deg);
         margin: 0.2rem 0;
     }
+
     .footer-top {
         flex-direction: column;
     }
+
     .footer-links-group {
         flex-direction: column;
         gap: 2rem;
     }
+
     .ecosystem-map {
-        display: none; /* Simplifies layout seamlessly on narrow mobiles */
+        display: none;
+    }
+
+    /* Smaller video spacing on mobile */
+    .project-video {
+        margin-bottom: 1.4rem;
+        border-radius: 8px;
+    }
+
+    .project-video iframe {
+        border-radius: 7px;
+    }
+}
+
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .project-card {
+        padding: 1.5rem;
+    }
+
+    .project-video {
+        border-radius: 7px;
+    }
+
+    .project-video iframe {
+        border-radius: 6px;
     }
 }
