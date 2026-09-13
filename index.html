@@ -146,17 +146,78 @@
                             In Development / Beta
                         </div>
 
-                        <!-- NoteZ YouTube Video -->
-                        <div class="project-video">
-                            <iframe
-                                src="https://www.youtube.com/embed/VzAAReLR_PA"
-                                title="NoteZ Product Video"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen>
-                            </iframe>
-                        </div>
+                      <!-- NoteZ Interactive YouTube Video -->
+<div class="project-video-wrapper">
 
+    <div class="project-video" id="notezVideoViewer">
+
+        <div class="video-viewport" id="videoViewport">
+
+            <div class="video-content" id="videoContent">
+
+                <iframe
+                    id="notezVideo"
+                    src="https://www.youtube.com/embed/VzAAReLR_PA?rel=0"
+                    title="NoteZ Product Video"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+        </div>
+
+        <!-- Video Controls -->
+        <div class="video-controls">
+
+            <button
+                type="button"
+                class="video-control-btn"
+                id="zoomOutBtn"
+                aria-label="Zoom out">
+                −
+            </button>
+
+            <span
+                class="zoom-level"
+                id="zoomLevel">
+                100%
+            </span>
+
+            <button
+                type="button"
+                class="video-control-btn"
+                id="zoomInBtn"
+                aria-label="Zoom in">
+                +
+            </button>
+
+            <button
+                type="button"
+                class="video-control-btn reset-btn"
+                id="resetZoomBtn"
+                aria-label="Reset zoom">
+                Reset
+            </button>
+
+            <button
+                type="button"
+                class="video-control-btn fullscreen-btn"
+                id="fullscreenBtn"
+                aria-label="Full screen">
+                ⛶
+            </button>
+
+        </div>
+
+        <div class="video-hint">
+            Zoom in and drag to explore
+        </div>
+
+    </div>
+
+</div>
                         <a
                             href="https://notez-b1322.web.app/"
                             target="_blank"
