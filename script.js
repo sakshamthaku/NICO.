@@ -120,26 +120,29 @@ function animateParticles() {
 animateParticles();
 
 /* =========================================================
-   NOTEZ INTERACTIVE VIDEO
-   Zoom + Drag + Reset + Fullscreen
+   NICO — NOTEZ INTERACTIVE VIDEO
+   Zoom + Real Drag + Auto Controls
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const videoViewer = document.getElementById("notezVideoViewer");
-    const videoViewport = document.getElementById("videoViewport");
-    const videoContent = document.getElementById("videoContent");
+    const viewer = document.getElementById("notezVideoViewer");
+    const viewport = document.getElementById("videoViewport");
+    const content = document.getElementById("videoContent");
+
+    const controls = document.getElementById("videoControls");
 
     const zoomInBtn = document.getElementById("zoomInBtn");
     const zoomOutBtn = document.getElementById("zoomOutBtn");
-    const resetZoomBtn = document.getElementById("resetZoomBtn");
+    const resetBtn = document.getElementById("resetZoomBtn");
     const fullscreenBtn = document.getElementById("fullscreenBtn");
+
     const zoomLevel = document.getElementById("zoomLevel");
 
     if (
-        !videoViewer ||
-        !videoViewport ||
-        !videoContent
+        !viewer ||
+        !viewport ||
+        !content
     ) {
         return;
     }
@@ -151,97 +154,149 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let scale = 1;
 
-    const MIN_SCALE = 1;
-    const MAX_SCALE = 4;
+    const MIN_ZOOM = 1;
+
+    const MAX_ZOOM = 4;
+
     const ZOOM_STEP = 0.25;
 
+
     let positionX = 0;
+
     let positionY = 0;
 
-    let isDragging = false;
 
-    let startX = 0;
-    let startY = 0;
+    /* Drag state */
+    let dragging = false;
 
-    let startPositionX = 0;
-    let startPositionY = 0;
+    let dragStartX = 0;
+
+    let dragStartY = 0;
+
+    let originalX = 0;
+
+    let originalY = 0;
+
+
+    /* Control timeout */
+    let controlsTimer = null;
 
 
     /* =====================================================
-       UPDATE VIDEO
+       APPLY TRANSFORM
        ===================================================== */
 
-    function updateVideo() {
+    function updateTransform() {
 
-        videoContent.style.transform =
+        content.style.transform =
             `translate(calc(-50% + ${positionX}px), calc(-50% + ${positionY}px)) scale(${scale})`;
 
         zoomLevel.textContent =
             `${Math.round(scale * 100)}%`;
+
+
+        /* Enable dragging */
+        if (scale > 1) {
+
+            viewport.classList.add("can-drag");
+
+            viewer.classList.add("zoomed");
+
+        } else {
+
+            viewport.classList.remove("can-drag");
+
+            viewer.classList.remove("zoomed");
+
+            positionX = 0;
+
+            positionY = 0;
+        }
     }
 
 
     /* =====================================================
-       LIMIT DRAGGING
+       CALCULATE DRAG LIMITS
        ===================================================== */
 
     function limitPosition() {
 
-        const viewportWidth = videoViewport.clientWidth;
-        const viewportHeight = videoViewport.clientHeight;
-
-        const extraWidth =
-            (viewportWidth * scale - viewportWidth) / 2;
-
-        const extraHeight =
-            (viewportHeight * scale - viewportHeight) / 2;
-
-
         if (scale <= 1) {
 
             positionX = 0;
+
             positionY = 0;
 
             return;
         }
 
 
-        const maxX = Math.max(0, extraWidth);
-        const maxY = Math.max(0, extraHeight);
+        const width =
+            viewport.clientWidth;
+
+        const height =
+            viewport.clientHeight;
 
 
-        positionX = Math.max(
-            -maxX,
-            Math.min(positionX, maxX)
-        );
+        /*
+         * How far the enlarged video
+         * can move horizontally.
+         */
 
-        positionY = Math.max(
-            -maxY,
-            Math.min(positionY, maxY)
-        );
+        const maxX =
+            (width * (scale - 1)) / 2;
+
+
+        /*
+         * How far the enlarged video
+         * can move vertically.
+         */
+
+        const maxY =
+            (height * (scale - 1)) / 2;
+
+
+        positionX =
+            Math.max(
+                -maxX,
+                Math.min(positionX, maxX)
+            );
+
+
+        positionY =
+            Math.max(
+                -maxY,
+                Math.min(positionY, maxY)
+            );
     }
 
 
     /* =====================================================
-       ZOOM
+       SET ZOOM
        ===================================================== */
 
-    function setZoom(newScale) {
+    function setZoom(newZoom) {
 
-        scale = Math.max(
-            MIN_SCALE,
-            Math.min(MAX_SCALE, newScale)
-        );
+        scale =
+            Math.max(
+                MIN_ZOOM,
+                Math.min(MAX_ZOOM, newZoom)
+            );
+
 
         if (scale === 1) {
 
             positionX = 0;
+
             positionY = 0;
         }
 
+
         limitPosition();
 
-        updateVideo();
+        updateTransform();
+
+        showControls();
     }
 
 
@@ -249,112 +304,192 @@ document.addEventListener("DOMContentLoaded", () => {
        ZOOM IN
        ===================================================== */
 
-    zoomInBtn.addEventListener("click", () => {
+    zoomInBtn.addEventListener(
+        "click",
+        (event) => {
 
-        setZoom(scale + ZOOM_STEP);
+            event.stopPropagation();
 
-    });
+            setZoom(scale + ZOOM_STEP);
+
+        }
+    );
 
 
     /* =====================================================
        ZOOM OUT
        ===================================================== */
 
-    zoomOutBtn.addEventListener("click", () => {
+    zoomOutBtn.addEventListener(
+        "click",
+        (event) => {
 
-        setZoom(scale - ZOOM_STEP);
+            event.stopPropagation();
 
-    });
+            setZoom(scale - ZOOM_STEP);
+
+        }
+    );
 
 
     /* =====================================================
        RESET
        ===================================================== */
 
-    resetZoomBtn.addEventListener("click", () => {
+    resetBtn.addEventListener(
+        "click",
+        (event) => {
 
-        scale = 1;
+            event.stopPropagation();
 
-        positionX = 0;
-        positionY = 0;
+            scale = 1;
 
-        updateVideo();
+            positionX = 0;
 
-    });
+            positionY = 0;
+
+            updateTransform();
+
+            showControls();
+
+        }
+    );
 
 
     /* =====================================================
        MOUSE DRAG
        ===================================================== */
 
-    videoViewport.addEventListener("mousedown", (event) => {
+    viewport.addEventListener(
+        "mousedown",
+        (event) => {
 
-        if (scale <= 1) {
-            return;
+            if (scale <= 1) {
+                return;
+            }
+
+
+            /*
+             * Important:
+             * Do not start dragging if the
+             * user clicks a YouTube control.
+             */
+
+            if (
+                event.target.closest(
+                    ".video-controls"
+                )
+            ) {
+                return;
+            }
+
+
+            dragging = true;
+
+
+            dragStartX =
+                event.clientX;
+
+            dragStartY =
+                event.clientY;
+
+
+            originalX =
+                positionX;
+
+            originalY =
+                positionY;
+
+
+            viewport.classList.add(
+                "dragging"
+            );
+
+
+            content.classList.add(
+                "is-dragging"
+            );
+
+
+            event.preventDefault();
+
         }
-
-        isDragging = true;
-
-        startX = event.clientX;
-        startY = event.clientY;
-
-        startPositionX = positionX;
-        startPositionY = positionY;
-
-        videoViewport.classList.add("dragging");
-
-        videoContent.classList.add("is-dragging");
-
-    });
+    );
 
 
-    document.addEventListener("mousemove", (event) => {
+    /* =====================================================
+       MOUSE MOVE
+       ===================================================== */
 
-        if (!isDragging) {
-            return;
+    document.addEventListener(
+        "mousemove",
+        (event) => {
+
+            if (!dragging) {
+                return;
+            }
+
+
+            const moveX =
+                event.clientX -
+                dragStartX;
+
+
+            const moveY =
+                event.clientY -
+                dragStartY;
+
+
+            positionX =
+                originalX + moveX;
+
+
+            positionY =
+                originalY + moveY;
+
+
+            limitPosition();
+
+            updateTransform();
+
         }
-
-        const deltaX =
-            event.clientX - startX;
-
-        const deltaY =
-            event.clientY - startY;
+    );
 
 
-        positionX =
-            startPositionX + deltaX;
+    /* =====================================================
+       MOUSE UP
+       ===================================================== */
 
-        positionY =
-            startPositionY + deltaY;
+    document.addEventListener(
+        "mouseup",
+        () => {
+
+            if (!dragging) {
+                return;
+            }
 
 
-        limitPosition();
-
-        updateVideo();
-
-    });
+            dragging = false;
 
 
-    document.addEventListener("mouseup", () => {
+            viewport.classList.remove(
+                "dragging"
+            );
 
-        if (!isDragging) {
-            return;
+
+            content.classList.remove(
+                "is-dragging"
+            );
+
         }
-
-        isDragging = false;
-
-        videoViewport.classList.remove("dragging");
-
-        videoContent.classList.remove("is-dragging");
-
-    });
+    );
 
 
     /* =====================================================
        TOUCH DRAG
        ===================================================== */
 
-    videoViewport.addEventListener(
+    viewport.addEventListener(
         "touchstart",
         (event) => {
 
@@ -362,71 +497,123 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            if (event.touches.length !== 1) {
+
+            if (
+                event.touches.length !== 1
+            ) {
                 return;
             }
 
-            const touch = event.touches[0];
 
-            isDragging = true;
+            const touch =
+                event.touches[0];
 
-            startX = touch.clientX;
-            startY = touch.clientY;
 
-            startPositionX = positionX;
-            startPositionY = positionY;
+            dragging = true;
 
-            videoContent.classList.add("is-dragging");
+
+            dragStartX =
+                touch.clientX;
+
+            dragStartY =
+                touch.clientY;
+
+
+            originalX =
+                positionX;
+
+            originalY =
+                positionY;
+
+
+            viewport.classList.add(
+                "dragging"
+            );
+
+
+            content.classList.add(
+                "is-dragging"
+            );
 
         },
-        { passive: true }
+        {
+            passive: true
+        }
     );
 
 
-    videoViewport.addEventListener(
+    /* =====================================================
+       TOUCH MOVE
+       ===================================================== */
+
+    viewport.addEventListener(
         "touchmove",
         (event) => {
 
-            if (!isDragging) {
+            if (!dragging) {
                 return;
             }
 
-            if (event.touches.length !== 1) {
+
+            if (
+                event.touches.length !== 1
+            ) {
                 return;
             }
 
-            const touch = event.touches[0];
 
-            const deltaX =
-                touch.clientX - startX;
+            const touch =
+                event.touches[0];
 
-            const deltaY =
-                touch.clientY - startY;
+
+            const moveX =
+                touch.clientX -
+                dragStartX;
+
+
+            const moveY =
+                touch.clientY -
+                dragStartY;
 
 
             positionX =
-                startPositionX + deltaX;
+                originalX + moveX;
+
 
             positionY =
-                startPositionY + deltaY;
+                originalY + moveY;
 
 
             limitPosition();
 
-            updateVideo();
+            updateTransform();
 
         },
-        { passive: true }
+        {
+            passive: true
+        }
     );
 
 
-    videoViewport.addEventListener(
+    /* =====================================================
+       TOUCH END
+       ===================================================== */
+
+    viewport.addEventListener(
         "touchend",
         () => {
 
-            isDragging = false;
+            dragging = false;
 
-            videoContent.classList.remove("is-dragging");
+
+            viewport.classList.remove(
+                "dragging"
+            );
+
+
+            content.classList.remove(
+                "is-dragging"
+            );
 
         }
     );
@@ -436,32 +623,39 @@ document.addEventListener("DOMContentLoaded", () => {
        MOUSE WHEEL ZOOM
        ===================================================== */
 
-    videoViewport.addEventListener(
+    viewport.addEventListener(
         "wheel",
         (event) => {
 
             event.preventDefault();
 
+
             if (event.deltaY < 0) {
 
-                setZoom(scale + ZOOM_STEP);
+                setZoom(
+                    scale + ZOOM_STEP
+                );
 
             } else {
 
-                setZoom(scale - ZOOM_STEP);
+                setZoom(
+                    scale - ZOOM_STEP
+                );
 
             }
 
         },
-        { passive: false }
+        {
+            passive: false
+        }
     );
 
 
     /* =====================================================
-       DOUBLE CLICK ZOOM
+       DOUBLE CLICK
        ===================================================== */
 
-    videoViewport.addEventListener(
+    viewport.addEventListener(
         "dblclick",
         () => {
 
@@ -480,18 +674,102 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       SHOW CONTROLS
+       ===================================================== */
+
+    function showControls() {
+
+        viewer.classList.add(
+            "controls-visible"
+        );
+
+
+        clearTimeout(
+            controlsTimer
+        );
+
+
+        controlsTimer =
+            setTimeout(
+                () => {
+
+                    viewer.classList.remove(
+                        "controls-visible"
+                    );
+
+                },
+                4000
+            );
+    }
+
+
+    /* =====================================================
+       CURSOR NEAR VIDEO
+       ===================================================== */
+
+    viewer.addEventListener(
+        "mouseenter",
+        () => {
+
+            showControls();
+
+        }
+    );
+
+
+    viewer.addEventListener(
+        "mousemove",
+        () => {
+
+            showControls();
+
+        }
+    );
+
+
+    viewer.addEventListener(
+        "mouseleave",
+        () => {
+
+            clearTimeout(
+                controlsTimer
+            );
+
+
+            controlsTimer =
+                setTimeout(
+                    () => {
+
+                        viewer.classList.remove(
+                            "controls-visible"
+                        );
+
+                    },
+                    4000
+                );
+
+        }
+    );
+
+
+    /* =====================================================
        FULLSCREEN
        ===================================================== */
 
     fullscreenBtn.addEventListener(
         "click",
-        async () => {
+        async (event) => {
+
+            event.stopPropagation();
+
 
             try {
 
-                if (!document.fullscreenElement) {
+                if (
+                    !document.fullscreenElement
+                ) {
 
-                    await videoViewer.requestFullscreen();
+                    await viewer.requestFullscreen();
 
                 } else {
 
@@ -502,7 +780,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (error) {
 
                 console.log(
-                    "Fullscreen unavailable:",
+                    "Fullscreen error:",
                     error
                 );
 
@@ -513,20 +791,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FULLSCREEN BUTTON ICON
+       FULLSCREEN ICON
        ===================================================== */
 
     document.addEventListener(
         "fullscreenchange",
         () => {
 
-            if (document.fullscreenElement === videoViewer) {
+            if (
+                document.fullscreenElement === viewer
+            ) {
 
-                fullscreenBtn.textContent = "✕";
+                fullscreenBtn.textContent =
+                    "✕";
 
             } else {
 
-                fullscreenBtn.textContent = "⛶";
+                fullscreenBtn.textContent =
+                    "⛶";
 
             }
 
@@ -535,7 +817,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       KEYBOARD SHORTCUTS
+       KEYBOARD
        ===================================================== */
 
     document.addEventListener(
@@ -543,34 +825,31 @@ document.addEventListener("DOMContentLoaded", () => {
         (event) => {
 
             if (
-                document.activeElement.tagName === "INPUT" ||
-                document.activeElement.tagName === "TEXTAREA"
-            ) {
-                return;
-            }
-
-
-            /* + / = = Zoom in */
-            if (
                 event.key === "+" ||
                 event.key === "="
             ) {
 
-                setZoom(scale + ZOOM_STEP);
+                setZoom(
+                    scale + ZOOM_STEP
+                );
 
             }
 
 
-            /* - = Zoom out */
-            if (event.key === "-") {
+            if (
+                event.key === "-"
+            ) {
 
-                setZoom(scale - ZOOM_STEP);
+                setZoom(
+                    scale - ZOOM_STEP
+                );
 
             }
 
 
-            /* 0 = Reset */
-            if (event.key === "0") {
+            if (
+                event.key === "0"
+            ) {
 
                 setZoom(1);
 
@@ -584,6 +863,6 @@ document.addEventListener("DOMContentLoaded", () => {
        INITIAL STATE
        ===================================================== */
 
-    updateVideo();
+    updateTransform();
 
 });
