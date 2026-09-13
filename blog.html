@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NICO Journal — NICO.world</title>
+
+    <meta
+        name="description"
+        content="NICO Journal — Ideas, products, technology, and what we're building."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* ================================
+           NICO BLOG — BASE
+        ================================= */
+
+        :root {
+            --bg: #050505;
+            --bg-soft: #090909;
+            --card: #0d0d0d;
+            --border: rgba(255,255,255,0.09);
+
+            --text: #ffffff;
+            --muted: #999999;
+
+            --cyan: #00e5ff;
+            --cyan-soft: rgba(0,229,255,0.12);
+
+            --max-width: 1180px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ================================
+           NAVBAR
+        ================================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            width: 100%;
+
+            background: rgba(5,5,5,0.82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: auto;
+
+            height: 72px;
+
+            padding: 0 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .logo span {
+            color: var(--cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: #bdbdbd;
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .back-btn {
+            padding: 9px 15px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+        }
+
+        .back-btn:hover {
+            border-color: rgba(0,229,255,0.4);
+            color: var(--cyan) !important;
+        }
+
+        /* ================================
+           HERO
+        ================================= */
+
+        .hero {
+            max-width: var(--max-width);
+            margin: auto;
+
+            padding: 110px 24px 70px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            color: var(--cyan);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+
+            margin-bottom: 22px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+            background: var(--cyan);
+
+            box-shadow: 0 0 15px var(--cyan);
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 88px);
+            line-height: 0.98;
+
+            letter-spacing: -0.065em;
+
+            max-width: 850px;
+        }
+
+        .hero p {
+            max-width: 650px;
+
+            margin-top: 28px;
+
+            color: var(--muted);
+
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        /* ================================
+           FEATURED ARTICLE
+        ================================= */
+
+        .featured-section {
+            max-width: var(--max-width);
+            margin: auto;
+
+            padding: 20px 24px 100px;
+        }
+
+        .featured-card {
+            position: relative;
+
+            min-height: 480px;
+
+            padding: 52px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            background:
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(0,229,255,0.13),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #0c0c0c,
+                    #070707
+                );
+
+            transition: 0.35s ease;
+        }
+
+        .featured-card:hover {
+            border-color: rgba(0,229,255,0.3);
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 20px 80px rgba(0,229,255,0.06);
+        }
+
+        .featured-glow {
+            position: absolute;
+
+            width: 320px;
+            height: 320px;
+
+            right: -100px;
+            top: -120px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(0,229,255,0.15);
+
+            box-shadow:
+                0 0 80px rgba(0,229,255,0.08);
+
+            pointer-events: none;
+        }
+
+        .featured-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 760px;
+        }
+
+        .category {
+            color: var(--cyan);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .featured-card h2 {
+            margin-top: 15px;
+
+            font-size: clamp(32px, 5vw, 58px);
+            line-height: 1.05;
+
+            letter-spacing: -0.05em;
+        }
+
+        .featured-card p {
+            margin-top: 20px;
+
+            max-width: 650px;
+
+            color: #a7a7a7;
+
+            font-size: 16px;
+        }
+
+        .article-meta {
+            margin-top: 25px;
+
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+        .read-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-top: 30px;
+
+            width: fit-content;
+
+            padding: 12px 18px;
+
+            border: 1px solid rgba(0,229,255,0.3);
+            border-radius: 999px;
+
+            color: white;
+
+            background: rgba(0,229,255,0.06);
+
+            transition: 0.25s ease;
+        }
+
+        .read-button:hover {
+            background: var(--cyan);
+            color: #000;
+
+            border-color: var(--cyan);
+        }
+
+        /* ================================
+           LATEST POSTS
+        ================================= */
+
+        .latest {
+            max-width: var(--max-width);
+            margin: auto;
+
+            padding: 0 24px 120px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            margin-bottom: 35px;
+        }
+
+        .section-heading h2 {
+            font-size: 32px;
+
+            letter-spacing: -0.04em;
+        }
+
+        .section-heading span {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .posts-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .post-card {
+            min-height: 300px;
+
+            padding: 28px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            border: 1px solid var(--border);
+            border-radius: 14px;
+
+            background: var(--card);
+
+            transition: 0.3s ease;
+        }
+
+        .post-card:hover {
+            border-color: rgba(0,229,255,0.28);
+
+            transform: translateY(-4px);
+        }
+
+        .post-top h3 {
+            margin-top: 13px;
+
+            font-size: 23px;
+            line-height: 1.2;
+
+            letter-spacing: -0.035em;
+        }
+
+        .post-top p {
+            margin-top: 15px;
+
+            color: #858585;
+
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .post-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding-top: 25px;
+
+            color: #666;
+
+            font-size: 12px;
+        }
+
+        .post-arrow {
+            color: var(--cyan);
+
+            font-size: 18px;
+        }
+
+        /* ================================
+           BLOG ARTICLE
+        ================================= */
+
+        .article-page {
+            display: none;
+
+            max-width: 850px;
+            margin: auto;
+
+            padding: 90px 24px 120px;
+        }
+
+        .article-page.active {
+            display: block;
+        }
+
+        .article-header {
+            padding-bottom: 55px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-header h1 {
+            margin-top: 18px;
+
+            font-size: clamp(40px, 7vw, 70px);
+            line-height: 1.03;
+
+            letter-spacing: -0.06em;
+        }
+
+        .article-intro {
+            margin-top: 25px;
+
+            color: #999;
+
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .article-body {
+            padding-top: 50px;
+        }
+
+        .article-body h2 {
+            margin-top: 55px;
+            margin-bottom: 15px;
+
+            font-size: 28px;
+
+            letter-spacing: -0.04em;
+        }
+
+        .article-body p {
+            margin-bottom: 20px;
+
+            color: #b1b1b1;
+
+            font-size: 16px;
+            line-height: 1.9;
+        }
+
+        .article-body strong {
+            color: white;
+        }
+
+        .article-body blockquote {
+            margin: 35px 0;
+
+            padding: 25px;
+
+            border-left: 2px solid var(--cyan);
+
+            background: rgba(0,229,255,0.04);
+
+            color: white;
+
+            font-size: 20px;
+        }
+
+        .article-back {
+            display: inline-flex;
+
+            margin-bottom: 35px;
+
+            color: var(--cyan);
+
+            font-size: 14px;
+        }
+
+        /* ================================
+           FOOTER
+        ================================= */
+
+        footer {
+            border-top: 1px solid var(--border);
+
+            padding: 45px 24px;
+        }
+
+        .footer-inner {
+            max-width: var(--max-width);
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-brand {
+            font-weight: 700;
+        }
+
+        .footer-brand span {
+            color: var(--cyan);
+        }
+
+        .footer-text {
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a:not(.back-btn) {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 75px;
+            }
+
+            .featured-card {
+                min-height: 430px;
+                padding: 30px;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ================================
+         NAVBAR
+    ================================= -->
+
+    <nav class="navbar">
+
+        <div class="nav-inner">
+
+            <a href="index.html" class="logo">
+                NICO<span>.</span>
+            </a>
+
+            <div class="nav-links">
+
+                <a href="#latest">Journal</a>
+
+                <a href="index.html" class="back-btn">
+                    NICO.world →
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================================
+         BLOG HERO
+    ================================= -->
+
+    <header class="hero">
+
+        <div class="eyebrow">
+            NICO Journal
+        </div>
+
+        <h1>
+            Ideas, products,
+            technology & what
+            we're building.
+        </h1>
+
+        <p>
+            Explore product updates, technology,
+            ideas, and stories from NICO.world.
+        </p>
+
+    </header>
+
+
+    <!-- ================================
+         FEATURED ARTICLE
+    ================================= -->
+
+    <section class="featured-section" id="featured">
+
+        <a
+            href="#notez-update"
+            class="featured-card"
+            onclick="openArticle(event)"
+        >
+
+            <div class="featured-glow"></div>
+
+            <div class="featured-content">
+
+                <div class="category">
+                    Featured · NoteZ
+                </div>
+
+                <h2>
+                    NoteZ Enters Its Next Chapter
+                    with NicoZ Pro
+                </h2>
+
+                <p>
+                    On December 3, 2026, NoteZ moves beyond
+                    its Beta stage with a more polished
+                    experience, enhanced AI capabilities,
+                    and new ways to work and connect.
+                </p>
+
+                <div class="article-meta">
+                    <span>December 3, 2026</span>
+                    <span>•</span>
+                    <span>NICO.world</span>
+                </div>
+
+                <span class="read-button">
+                    Read announcement
+                    <span>→</span>
+                </span>
+
+            </div>
+
+        </a>
+
+    </section>
+
+
+    <!-- ================================
+         LATEST POSTS
+    ================================= -->
+
+    <section class="latest" id="latest">
+
+        <div class="section-heading">
+
+            <h2>
+                Latest from NICO
+            </h2>
+
+            <span>
+                Products · Technology · Ideas
+            </span>
+
+        </div>
+
+
+        <div class="posts-grid">
+
+            <!-- POST 1 -->
+
+            <a
+                href="#notez-update"
+                class="post-card"
+                onclick="openArticle(event)"
+            >
+
+                <div class="post-top">
+
+                    <div class="category">
+                        Products
+                    </div>
+
+                    <h3>
+                        NoteZ Enters Its Next Chapter
+                        with NicoZ Pro
+                    </h3>
+
+                    <p>
+                        A new stage for NoteZ with
+                        improved tools, AI Summary,
+                        THE-CONECT and Personal Workplace.
+                    </p>
+
+                </div>
+
+                <div class="post-bottom">
+
+                    <span>
+                        Dec 3, 2026
+                    </span>
+
+                    <span class="post-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- POST 2 -->
+
+            <a
+                href="#"
+                class="post-card"
+                onclick="return false;"
+            >
+
+                <div class="post-top">
+
+                    <div class="category">
+                        Technology
+                    </div>
+
+                    <h3>
+                        Building a More Personal
+                        Digital Workplace
+                    </h3>
+
+                    <p>
+                        Exploring the idea of a digital
+                        environment designed around
+                        the way people actually work.
+                    </p>
+
+                </div>
+
+                <div class="post-bottom">
+
+                    <span>
+                        Coming soon
+                    </span>
+
+                    <span class="post-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- POST 3 -->
+
+            <a
+                href="#"
+                class="post-card"
+                onclick="return false;"
+            >
+
+                <div class="post-top">
+
+                    <div class="category">
+                        NICO
+                    </div>
+
+                    <h3>
+                        What We're Building
+                    </h3>
+
+                    <p>
+                        A look at the ideas and products
+                        shaping the future direction
+                        of NICO.world.
+                    </p>
+
+                </div>
+
+                <div class="post-bottom">
+
+                    <span>
+                        Coming soon
+                    </span>
+
+                    <span class="post-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         NOTEZ ARTICLE
+    ================================= -->
+
+    <article
+        class="article-page"
+        id="notez-update"
+    >
+
+        <a
+            href="#featured"
+            class="article-back"
+            onclick="closeArticle(event)"
+        >
+            ← Back to NICO Journal
+        </a>
+
+
+        <header class="article-header">
+
+            <div class="category">
+                NoteZ · Product Update
+            </div>
+
+            <h1>
+                NoteZ Enters Its
+                Next Chapter with
+                NicoZ Pro
+            </h1>
+
+            <p class="article-intro">
+                On December 3, 2026, NoteZ moves beyond
+                its Beta stage with a more polished
+                experience, enhanced AI capabilities,
+                and new ways to work and connect.
+            </p>
+
+            <div class="article-meta">
+                <span>December 3, 2026</span>
+                <span>•</span>
+                <span>NICO.world</span>
+            </div>
+
+        </header>
+
+
+        <div class="article-body">
+
+            <p>
+                NoteZ is entering its next chapter.
+                After the Beta stage, we are moving
+                forward with a more polished and capable
+                experience designed around everyday
+                digital work and productivity.
+            </p>
+
+
+            <h2>
+                Introducing NicoZ Pro
+            </h2>
+
+            <p>
+                <strong>NicoZ Pro launches on
+                December 3, 2026 at ₹50/month.</strong>
+            </p>
+
+            <p>
+                The core NoteZ experience remains
+                available for free, while Pro introduces
+                additional capabilities for users who
+                want a more complete experience.
+            </p>
+
+            <p>
+                Supported generated content can also
+                be created without NICO branding with
+                the Pro experience.
+            </p>
+
+
+            <h2>
+                More Capable AI Summary
+            </h2>
+
+            <p>
+                AI Summary is being improved into a more
+                polished and reliable experience, with
+                support for longer documents and more
+                useful AI-generated summaries.
+            </p>
+
+
+            <h2>
+                Introducing THE-CONECT
+            </h2>
+
+            <p>
+                THE-CONECT is a new experience focused
+                on connecting one person with another
+                person and AI.
+            </p>
+
+            <p>
+                It represents a new direction for how
+                people can communicate and interact
+                with AI inside the NoteZ ecosystem.
+            </p>
+
+
+            <h2>
+                Your Personal Workplace
+            </h2>
+
+            <p>
+                Personal Workplace brings everyday
+                digital tools together into one personal
+                environment.
+            </p>
+
+            <p>
+                Work editor, calculator, time, planner,
+                calendar, AI, personal activities, and
+                other tools can come together as a
+                digital space designed around the user.
+            </p>
+
+            <p>
+                Users can also choose information they
+                want their AI to remember, allowing
+                future conversations to have more
+                useful context.
+            </p>
+
+
+            <blockquote>
+                “December 3 marks more than a new
+                release. It marks the next chapter
+                of NoteZ.”
+            </blockquote>
+
+
+            <h2>
+                What's Next
+            </h2>
+
+            <p>
+                NicoZ Pro is only the beginning.
+                NICO.world is continuing to develop
+                new tools, AI capabilities, and digital
+                experiences for NoteZ.
+            </p>
+
+            <p>
+                We are building toward a future where
+                the tools people use every day can feel
+                more connected, personal, and useful.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+            <div class="footer-brand">
+                NICO<span>.</span>world
+            </div>
+
+            <div class="footer-text">
+                © 2026 NICO.world. All rights reserved.
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script>
+
+        function openArticle(event) {
+
+            event.preventDefault();
+
+            const article =
+                document.getElementById("notez-update");
+
+            const featured =
+                document.getElementById("featured");
+
+            const latest =
+                document.getElementById("latest");
+
+            const hero =
+                document.querySelector(".hero");
+
+            article.classList.add("active");
+
+            featured.style.display = "none";
+            latest.style.display = "none";
+            hero.style.display = "none";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+            history.pushState(
+                null,
+                "",
+                "#notez-update"
+            );
+        }
+
+
+        function closeArticle(event) {
+
+            event.preventDefault();
+
+            const article =
+                document.getElementById("notez-update");
+
+            const featured =
+                document.getElementById("featured");
+
+            const latest =
+                document.getElementById("latest");
+
+            const hero =
+                document.querySelector(".hero");
+
+            article.classList.remove("active");
+
+            featured.style.display = "block";
+            latest.style.display = "block";
+            hero.style.display = "block";
+
+            history.pushState(
+                null,
+                "",
+                "#featured"
+            );
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+
+        window.addEventListener("load", function () {
+
+            if (window.location.hash === "#notez-update") {
+
+                const event =
+                    new Event("click");
+
+                openArticle(event);
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
