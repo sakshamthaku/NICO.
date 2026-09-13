@@ -10,6 +10,99 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- External CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Inline styles specifically for the NicoZ Pro Launch Countdown to integrate cleanly with style.css -->
+    <style>
+        .launch-countdown-section {
+            background-color: #121214;
+            border-bottom: 1px solid #27272a;
+            padding: 40px 20px;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+        }
+        .launch-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .launch-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #00f0ff;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        .launch-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+        .launch-subtitle {
+            font-size: 0.95rem;
+            color: #a1a1aa;
+            margin-bottom: 30px;
+        }
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .countdown-box {
+            background-color: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 20px 10px;
+            text-align: center;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .countdown-box:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        .countdown-number {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+            font-variant-numeric: tabular-nums;
+        }
+        .countdown-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #71717a;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+        .launch-live-message {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #00f0ff;
+            letter-spacing: -0.01em;
+            padding: 10px 0;
+        }
+        @media (max-width: 640px) {
+            .countdown-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .countdown-number {
+                font-size: 1.8rem;
+            }
+            .launch-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -51,6 +144,34 @@
     </header>
 
     <main>
+
+        <!-- NICOZ PRO LIVE LAUNCH COUNTDOWN SECTION -->
+        <section class="launch-countdown-section" id="launch-countdown">
+            <div class="launch-container">
+                <div class="launch-badge">Global Release</div>
+                <h2 class="launch-title">NicoZ Pro Launch Countdown</h2>
+                <p class="launch-subtitle">Target Launch Date: December 3, 2026</p>
+                
+                <div class="countdown-grid" id="countdownGrid">
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="daysVal">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="hoursVal">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="minsVal">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="secsVal">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- HERO SECTION -->
   
@@ -938,6 +1059,57 @@
 
     <!-- External JavaScript -->
     <script src="script.js"></script>
+
+    <!-- Countdown Engine Script -->
+    <script>
+        (function() {
+            // Target date: December 3, 2026 00:00:00
+            const targetDate = new Date('December 3, 2026 00:00:00').getTime();
+
+            const daysEl = document.getElementById('daysVal');
+            const hoursEl = document.getElementById('hoursVal');
+            const minsEl = document.getElementById('minsVal');
+            const secsEl = document.getElementById('secsVal');
+            const gridEl = document.getElementById('countdownGrid');
+            const subtitleEl = document.querySelector('.launch-subtitle');
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance <= 0) {
+                    // Time reached or passed
+                    if (daysEl) daysEl.textContent = '00';
+                    if (hoursEl) hoursEl.textContent = '00';
+                    if (minsEl) minsEl.textContent = '00';
+                    if (secsEl) secsEl.textContent = '00';
+
+                    if (gridEl) {
+                        gridEl.innerHTML = '<div style="grid-column: span 4;" class="launch-live-message">NicoZ Pro is now live.</div>';
+                    }
+                    if (subtitleEl) {
+                        subtitleEl.style.display = 'none';
+                    }
+                    clearInterval(timerInterval);
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+                if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+                if (minsEl) minsEl.textContent = String(minutes).padStart(2, '0');
+                if (secsEl) secsEl.textContent = String(seconds).padStart(2, '0');
+            }
+
+            // Run immediately then every second
+            updateCountdown();
+            const timerInterval = setInterval(updateCountdown, 1000);
+        })();
+    </script>
 
 </body>
 </html>
