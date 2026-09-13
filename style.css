@@ -956,71 +956,6 @@ header.scrolled {
         left: 5px;
     }
 }
-
-
-/* =========================================================
-   VIDEO RESPONSIVE DESIGN
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    .hero-btns {
-        flex-direction: column;
-    }
-
-    .gaming-flow-box {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .path-sep {
-        transform: rotate(90deg);
-        margin: 0.2rem 0;
-    }
-
-    .footer-top {
-        flex-direction: column;
-    }
-
-    .footer-links-group {
-        flex-direction: column;
-        gap: 2rem;
-    }
-
-    .ecosystem-map {
-        display: none;
-    }
-
-    /* Smaller video spacing on mobile */
-    .project-video {
-        margin-bottom: 1.4rem;
-        border-radius: 8px;
-    }
-
-    .project-video iframe {
-        border-radius: 7px;
-    }
-}
-
-
-/* =========================================================
-   EXTRA SMALL DEVICES
-   ========================================================= */
-
-@media (max-width: 400px) {
-
-    .project-card {
-        padding: 1.5rem;
-    }
-
-    .project-video {
-        border-radius: 7px;
-    }
-
-    .project-video iframe {
-        border-radius: 6px;
-    }
-}
 /* =========================================================
    NOTEZ INTERACTIVE VIDEO VIEWER
    ========================================================= */
@@ -1392,3 +1327,4 @@ header.scrolled {
         display: none;
     }
 }
+
